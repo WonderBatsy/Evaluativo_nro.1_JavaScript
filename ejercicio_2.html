@@ -1,0 +1,328 @@
+<!--
+
+Evaluativo nro. 1 
+Cátedra: JavaScript
+Alumno: Manuel Paz
+Cédula: 28.264.712
+Sección: N-1113P
+
+2) Calcular el interés que tiene una cuenta de ahorros a fin de año, sabiendo que: 
+
+    - La cuenta genera un interés del 15% anual, lo que equivale a 1.25% mensual
+    - El monto inicial se ingresa en el mes de Enero y mensualmente se ingresan 250,00 Bs
+    - El cálculo se requiere hasta el mes de Diciembre
+
+-->
+
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <link rel="shorcut icon" type="x-icon" href="public/css/imagenes/logo.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 2 | Ejercicios Prácticos de JavaScript</title>
+  <link rel="stylesheet" href="public/css/boxicons.min.css">
+  <link rel="stylesheet" href="public/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="public/css/style_ejercicio2.css">
+  <script src="public/js/jquery.min.js" type="text/javascript"></script>
+  <script src="public/js/sweetalert2@11.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+  <header class="encabezado">
+
+    <a href="index.html" class="logo">
+
+      <img src="" alt="logo">
+    
+    </a>
+
+    <!-- Barra de navegación -->
+
+    <nav class="barra">
+
+      <a href="index.html" class="logos_barra">
+
+        <i class='bx bxs-home'></i>
+        
+        INICIO
+      
+      </a>
+
+      <a href="ejercicio_1.html" class="logos_barra">
+        
+        <i class='bx bx-body'></i>
+      
+        EJERCICIO 1
+      
+      </a>
+
+      <a href="ejercicio_2.html" class="logos_barra">
+        
+        <i class='bx bxs-dollar-circle'></i>
+        
+        EJERCICIO 2
+    
+      </a>
+
+      <a href="ejercicio_3.html" class="logos_barra">
+        
+        <i class='bx bxs-book'></i>
+        
+        EJERCICIO 3
+    
+      </a>
+
+    </nav>
+
+    <!-- Icono de menú para dispositivos móviles -->
+
+    <div class="main">
+
+      <div class="bx bx-menu" id="menu-icon"></div>
+
+    </div>
+
+  </header>
+
+  <!-- Script de SweetAlert para mostrar un mensaje al cargar la página -->
+
+  <script>
+
+    Swal.fire({
+
+        title: 'Ejercicio 2',
+        html: '<div class="text-start">Calcular el interés que tiene una cuenta de ahorros a fin de año, sabiendo que: <br><br>- La cuenta genera un interés del 15% anual, lo que equivale a 1.25% mensual<br>- El monto inicial se ingresa en el mes de Enero y mensualmente se ingresan 250,00 Bs<br>- El cálculo se requiere hasta el mes de Diciembre</div>',
+        icon: 'warning',
+        color: 'black',
+        width: 850,
+        showDenyButton: true,
+        confirmButtonColor: '#f7de1f',
+        denyButtonColor: 'black',
+        confirmButtonText: 'Continuar al Ejercicio 2',
+        denyButtonText: 'Regresar a la Página Principal',
+
+    }).then((result) => {
+
+        if (result.isDenied) {
+
+            window.location.href = 'index.html';
+
+        }
+
+    })
+
+  </script>
+
+  <!-- Contenido principal de la página -->
+
+    <div class="wrapper">
+
+        <div class="contenedor principal">
+
+            <div class="row justify-content-md-center">
+
+                <div class="col-md-10 centro">
+
+                    <!-- Formulario de entrada de datos -->
+
+                    <div class="input-box">
+
+                        <header>
+                            
+                            Entrada de datos
+                        
+                        </header>
+                                        
+                        <div class="campo_entrada">
+
+                            <input type="text" class="entrada" id="monto" maxlength="50" onkeypress="chequearMonto(event)" required autocomplete="off">
+
+                            <label for="monto">
+                            
+                                Monto Inicial (Bs.)
+                            
+                            </label>
+
+                            <i class='bx bxs-dollar-circle'></i>
+
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <button id="submit" name="aceptar" class="submit" onclick="calcularInteres()">Calcular interés</button>
+                    
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <button type="submit" id="limpiar" name="limpiar" class="limpiar" onclick="limpiarCampos()">Limpiar registro</button>
+                    
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row justify-content-md-center">
+
+                <div class="col-md-10 centro">
+
+                    <div class="input-box">
+
+                        <h2>
+                            
+                            Resultado
+                        
+                        </h2>       
+
+                        <p class="texto">El interés acumulado al final del año es de: <br><br><span id="resultado">0</span> Bs.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Script para cambiar el logo en función del tamaño de la pantalla -->
+
+    <script>
+
+        function resize() {
+        
+            if ($(window).width() < 768) { 
+        
+                $(".logo img").attr('src', 'public/css/imagenes/logo.png');
+
+            } else {
+
+                $(".logo img").attr('src', 'public/css/imagenes/logo_texto.png');
+
+            }
+        }
+
+        resize();
+
+        $(window).on('resize', resize);
+
+    </script>
+
+    <!-- Script para abrir/cerrar la barra de navegación en dispositivos móviles -->
+
+    <script>
+    
+        let menu = document.querySelector("#menu-icon");
+        let barra = document.querySelector(".barra");
+
+        menu.onclick = () => {
+
+            menu.classList.toggle("bx-x");
+            barra.classList.toggle("open");
+
+        }
+    
+    </script>
+
+    <!-- Scripts para validar la entrada de datos y calcular el interés -->
+
+    <script>
+    
+        function chequearMonto(event) {
+
+            // Obtener el valor actual del campo de entrada
+            var tecla = event.key;
+
+            // Permitir números del 0 al 9 y el punto decimal
+            var permitidas = "0123456789.";
+
+            // Verificar si el valor ingresado está en la lista de caracteres permitidos
+            if (permitidas.indexOf(tecla) === -1) {
+
+                // El valor ingresado no es válido, prevenir la entrada
+                event.preventDefault();
+
+            }
+
+        }
+
+        function calcularInteres() {
+
+            var montoInicial = parseFloat(document.getElementById("monto").value);
+
+            if (isNaN(montoInicial) || montoInicial < 0) {
+
+                Swal.fire({
+
+                    title: 'Calculo fallido',
+                    text: 'Debe ingresar un Monto Inicial válido (mayor o igual a 0)',
+                    icon: 'error',
+                    width: 400,
+                    padding: '1em',
+                    color: 'black',
+                    background: '#fff',
+                    confirmButtonColor: 'black',
+                    focusConfirm: false,
+                    confirmButtonText: 'Aceptar'
+
+                })
+
+                return;
+
+            }
+
+            var interesAnual = 0.15; // 15% anual
+            var interesMensual = interesAnual / 12; // 1.25% mensual
+            var montoAcumulado = montoInicial;
+
+            for (var mes = 1; mes <= 12; mes++) {
+
+                montoAcumulado += 250; // Ingreso mensual de 250 Bs.
+                var interesMes = montoAcumulado * interesMensual;
+                montoAcumulado += interesMes;
+
+            }
+
+            document.getElementById("resultado").textContent = montoAcumulado.toFixed(2);
+
+            Swal.fire({
+
+                title: '¡Calculo exitoso!',
+                text: 'Se ha calculado el interés de la cuenta',
+                icon: 'success',
+                width: 450,
+                padding: '1em',
+                color: 'black',
+                background: '#fff',
+                confirmButtonColor: '#f7de1f',
+                focusConfirm: false,
+                confirmButtonText: 'Aceptar'
+
+        })
+
+        }
+
+        function limpiarCampos() {
+
+            document.getElementById("monto").value = "";
+
+            document.getElementById("resultado").textContent = "0";
+
+        }
+
+    </script>
+    
+</body>
+
+</html>

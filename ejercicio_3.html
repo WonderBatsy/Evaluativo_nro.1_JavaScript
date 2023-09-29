@@ -1,0 +1,668 @@
+<!--
+
+Evaluativo nro. 1 
+Cátedra: JavaScript
+Alumno: Manuel Paz
+Cédula: 28.264.712
+Sección: N-1113P
+
+3) Haga un programa que lea N tarjetas de datos A, B, C, D, E: 
+
+    A = Número de cédula de identidad del alumno
+    B = Nombre del alumno
+    C = Nota de matemáticas
+    D = Nota de física
+    E = Nota de programación
+
+    Hallar:
+
+    - Nota promedio de cada materia
+    - Número de alumnos aprobados en cada materia
+    - Número de alumnos aplazados en cada materia
+    - Número de alumnos que aprobaron todas las materias
+    - Número de alumnos aprobaron una sola materia
+    - Número de alumnos aprobaron dos materias
+    - Nota máxima en cada materia
+
+-->
+
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <link rel="shorcut icon" type="x-icon" href="public/css/imagenes/logo.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 3 | Ejercicios Prácticos de JavaScript</title>
+  <link rel="stylesheet" href="public/css/boxicons.min.css">
+  <link rel="stylesheet" href="public/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="public/css/style_ejercicio3.css">
+  <script src="public/js/jquery.min.js" type="text/javascript"></script>
+  <script src="public/js/sweetalert2@11.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+  <header class="encabezado">
+
+    <a href="index.html" class="logo">
+
+      <img src="" alt="logo">
+    
+    </a>
+
+    <!-- Barra de navegación -->
+
+    <nav class="barra">
+
+      <a href="index.html" class="logos_barra">
+
+        <i class='bx bxs-home'></i>
+        
+        INICIO
+      
+      </a>
+
+      <a href="ejercicio_1.html" class="logos_barra">
+        
+        <i class='bx bx-body'></i>
+      
+        EJERCICIO 1
+      
+      </a>
+
+      <a href="ejercicio_2.html" class="logos_barra">
+        
+        <i class='bx bxs-dollar-circle'></i>
+        
+        EJERCICIO 2
+    
+      </a>
+
+      <a href="ejercicio_3.html" class="logos_barra">
+        
+        <i class='bx bxs-book'></i>
+        
+        EJERCICIO 3
+    
+      </a>
+
+    </nav>
+
+    <!-- Icono de menú para dispositivos móviles -->
+
+    <div class="main">
+
+      <div class="bx bx-menu" id="menu-icon"></div>
+
+    </div>
+
+  </header>
+
+  <!-- Script de SweetAlert para mostrar un mensaje al cargar la página -->
+
+  <script>
+
+    Swal.fire({
+
+        title: 'Ejercicio 3',
+        html: '<div class="text-start">Haga un programa que lea N tarjetas de datos A, B, C, D, E: <br><br>A = Número de cédula de identidad del alumno<br>B = Nombre del alumno<br>C = Nota de matemáticas<br>D = Nota de física<br>E = Nota de programación<br><br>Hallar:<br><br>- Nota promedio de cada materia<br>- Número de alumnos aprobados en cada materia<br>- Número de alumnos aplazados en cada materia<br>- Número de alumnos que aprobaron todas las materias<br>- Número de alumnos aprobaron una sola materia<br>- Número de alumnos aprobaron dos materias<br>- Nota máxima en cada materia</div>',
+        icon: 'warning',
+        color: 'black',
+        width: 610,
+        showDenyButton: true,
+        confirmButtonColor: '#f7de1f',
+        denyButtonColor: 'black',
+        confirmButtonText: 'Continuar al Ejercicio 3',
+        denyButtonText: 'Regresar a la Página Principal',
+
+    }).then((result) => {
+
+        if (result.isDenied) {
+
+            window.location.href = 'index.html';
+
+        }
+
+    })
+
+  </script>
+
+  <!-- Contenido principal de la página -->
+
+    <div class="wrapper">
+
+        <div class="contenedor principal">
+
+            <div class="row justify-content-md-center">
+
+                <div class="col-md-10 centro">
+
+                    <!-- Formulario de entrada de datos -->
+
+                    <div class="input-box">
+
+                        <header>
+                            
+                            Entrada de datos
+                        
+                        </header>
+                                        
+                        <div class="campo_entrada">
+
+                            <input type="text" class="entrada" id="nombre" maxlength="50" onkeypress="chequearNombre(event)" required autocomplete="off">
+
+                            <label for="nombre">
+                            
+                                Nombre del alumno
+                            
+                            </label>
+
+                            <i class='bx bx-font'></i>
+
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <input type="text" class="entrada" id="cedula" maxlength="50" onkeypress="chequearCedula(event)" required autocomplete="off">
+
+                            <label for="cedula">
+                            
+                                Cédula de Identidad del alumno
+                            
+                            </label>
+
+                            <i class='bx bxs-id-card'></i>
+
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <input type="text" class="entrada" id="matematicas" min="0" max="20" onkeypress="chequearNota(event)" required autocomplete="off">
+
+                            <label for="matematicas">
+                            
+                                Nota de Matemáticas del alumno
+                            
+                            </label>
+
+                            <i class='bx bxs-book'></i>
+
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <input type="text" class="entrada" id="fisica" min="0" max="20" onkeypress="chequearNota(event)" required autocomplete="off">
+
+                            <label for="fisica">
+                            
+                                Nota de Física del alumno
+                            
+                            </label>
+
+                            <i class='bx bxs-book'></i>
+
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <input type="text" class="entrada" id="programacion" min="0" max="20" onkeypress="chequearNota(event)" required autocomplete="off">
+
+                            <label for="programacion">
+                            
+                                Nota de Programación del alumno
+                            
+                            </label>
+
+                            <i class='bx bxs-book'></i>
+
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <button id="submit" name="aceptar" class="submit" onclick="agregarAlumno()">Agregar alumno</button>
+                    
+                        </div>
+
+                        <div class="campo_entrada">
+
+                            <button type="submit" id="limpiar" name="limpiar" class="limpiar" onclick="limpiarRegistros()">Limpiar registro</button>
+                    
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row justify-content-md-center">
+
+                <div class="col-md-10 centro">
+
+                    <!-- Resultados y registro de alumnos -->
+
+                    <div class="input-box">
+
+                        <h2>
+                            
+                            Resultados
+                        
+                        </h2>
+                        
+                        <p class="texto">Nota promedio de Matemáticas: <span id="promedioMatematicas"> 0</span></p>
+                        <p class="texto">Nota promedio de Física: <span id="promedioFisica"> 0</span></p>
+                        <p class="texto">Nota promedio de Programación: <span id="promedioProgramacion"> 0</span></p>
+                        <p class="texto">Número de alumnos aprobados en Matemáticas: <span id="aprobadosMatematicas"> 0</span></p>
+                        <p class="texto">Número de alumnos aprobados en Física: <span id="aprobadosFisica"> 0</span></p>
+                        <p class="texto">Número de alumnos aprobados en Programación: <span id="aprobadosProgramacion"> 0</span></p>
+                        <p class="texto">Número de alumnos que aprobaron una sola materia: <span id="aprobadosUnaMateria"> 0</span></p>
+                        <p class="texto">Número de alumnos que aprobaron dos materias: <span id="aprobadosDosMaterias"> 0</span></p>
+                        <p class="texto">Número de alumnos aprobados en todas las materias: <span id="aprobadosTodas"> 0</span></p>
+                        <p class="texto">Nota máxima en Matemáticas: <span id="maximaMatematicas"> 0</span></p>
+                        <p class="texto">Nota máxima en Física: <span id="maximaFisica"> 0</span></p>
+                        <p class="texto">Nota máxima en Programación: <span id="maximaProgramacion"> 0</span></p>
+                
+                        <h3>
+                            
+                            Registro de alumnos
+                        
+                        </h3>
+
+                        <div class="scrollable">
+
+                            <ul id="registroAlumnos"></ul>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Script para cambiar el logo en función del tamaño de la pantalla -->
+
+    <script>
+
+        function resize() {
+        
+            if ($(window).width() < 768) { 
+        
+                $(".logo img").attr('src', 'public/css/imagenes/logo.png');
+
+            } else {
+
+                $(".logo img").attr('src', 'public/css/imagenes/logo_texto.png');
+
+            }
+        }
+
+        resize();
+
+        $(window).on('resize', resize);
+
+    </script>
+
+    <!-- Script para abrir y cerrar la barra de navegación en dispositivos móviles -->
+
+    <script>
+    
+        let menu = document.querySelector("#menu-icon");
+        let barra = document.querySelector(".barra");
+
+        menu.onclick = () => {
+
+            menu.classList.toggle("bx-x");
+            barra.classList.toggle("open");
+
+        }
+    
+    </script>
+
+    <!-- Scripts para validar la entrada de datos y realizar cálculos -->
+
+    <script>
+
+        // Funciones para validar la entrada de datos
+
+        function chequearNombre(event) {
+
+            var tecla = event.key;
+
+            var permitidas = /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]$/; 
+
+            if (!permitidas.test(tecla)) {
+
+                event.preventDefault(); 
+
+            }
+
+        }
+
+        function chequearCedula(event) {
+
+            // Obtener el valor actual del campo de entrada
+            var tecla = event.key;
+
+            // Permitir números del 0 al 9 y el punto decimal
+            var permitidas = "0123456789";
+
+            // Verificar si el valor ingresado está en la lista de caracteres permitidos
+            if (permitidas.indexOf(tecla) === -1) {
+
+                // El valor ingresado no es válido, prevenir la entrada
+                event.preventDefault();
+
+            }
+
+        }
+
+        function chequearNota(event) {
+
+            // Obtener el valor actual del campo de entrada
+            var tecla = event.key;
+
+            // Permitir números del 0 al 9 y el punto decimal
+            var permitidas = "0123456789.";
+
+            // Verificar si el valor ingresado está en la lista de caracteres permitidos
+            if (permitidas.indexOf(tecla) === -1) {
+
+                // El valor ingresado no es válido, prevenir la entrada
+                event.preventDefault();
+
+            }
+
+        }
+
+        // Arreglo para almacenar datos de alumnos
+
+        var alumnos = [];
+
+        // Función para validar las notas ingresadas
+
+        function validarNotas() {
+
+            var matematicas = parseFloat(document.getElementById("matematicas").value);
+            var fisica = parseFloat(document.getElementById("fisica").value);
+            var programacion = parseFloat(document.getElementById("programacion").value);
+
+            if (isNaN(matematicas) || isNaN(fisica) || isNaN(programacion) || matematicas < 0 || fisica < 0 || programacion < 0 || matematicas > 20 || fisica > 20 || programacion > 20) {
+                
+                Swal.fire({
+
+                    title: 'Registro fallido',
+                    text: 'Debe ingresar una nota válida (entre 0 y 20 puntos)',
+                    icon: 'error',
+                    width: 400,
+                    padding: '1em',
+                    color: 'black',
+                    background: '#fff',
+                    confirmButtonColor: 'black',
+                    focusConfirm: false,
+                    confirmButtonText: 'Aceptar'
+
+                })
+
+                return false;
+
+            }
+
+            return true;
+        }
+
+        // Función para agregar un alumno a la lista
+
+        function agregarAlumno() {
+
+            var cedula = document.getElementById("cedula").value;
+            var nombre = document.getElementById("nombre").value;
+
+            if (cedula.trim() === "" || nombre.trim() === "") {
+
+                Swal.fire({
+
+                title: 'Registro fallido',
+                text: 'Debe ingresar el nombre y cédula de identidad del alumno',
+                icon: 'error',
+                width: 400,
+                padding: '1em',
+                color: 'black',
+                background: '#fff',
+                confirmButtonColor: 'black',
+                focusConfirm: false,
+                confirmButtonText: 'Aceptar'
+
+                })
+
+                return;
+            }
+
+            if (!validarNotas()) {
+
+                return;
+
+            }
+
+            var matematicas = parseFloat(document.getElementById("matematicas").value);
+            var fisica = parseFloat(document.getElementById("fisica").value);
+            var programacion = parseFloat(document.getElementById("programacion").value);
+
+            var alumno = {
+
+                cedula: cedula,
+                nombre: nombre,
+                matematicas: matematicas,
+                fisica: fisica,
+                programacion: programacion
+
+            };
+
+            alumnos.push(alumno);
+
+            actualizarEstadisticas();
+            actualizarRegistro();
+
+            Swal.fire({
+
+                title: '¡Registro exitoso!',
+                text: 'El alumno ha sido registrado',
+                icon: 'success',
+                width: 450,
+                padding: '1em',
+                color: 'black',
+                background: '#fff',
+                confirmButtonColor: '#f7de1f',
+                focusConfirm: false,
+                confirmButtonText: 'Aceptar'
+
+        })
+
+            // Limpiar los campos de entrada
+
+            document.getElementById("cedula").value = "";
+            document.getElementById("nombre").value = "";
+            document.getElementById("matematicas").value = "";
+            document.getElementById("fisica").value = "";
+            document.getElementById("programacion").value = "";
+        }
+
+        // Función para actualizar las estadísticas
+
+        function actualizarEstadisticas() {
+
+            var totalAlumnos = alumnos.length;
+
+            if (totalAlumnos === 0) {
+
+                return;
+
+            }
+
+            var sumaMatematicas = 0;
+            var sumaFisica = 0;
+            var sumaProgramacion = 0;
+            var aprobadosMatematicas = 0;
+            var aprobadosFisica = 0;
+            var aprobadosProgramacion = 0;
+            var aprobadosTodas = 0;
+            var aprobadosUnaMateria = 0;
+            var aprobadosDosMaterias = 0;
+            var maximaMatematicas = 0;
+            var maximaFisica = 0;
+            var maximaProgramacion = 0;
+
+            for (var i = 0; i < totalAlumnos; i++) {
+
+                var alumno = alumnos[i];
+                sumaMatematicas += alumno.matematicas;
+                sumaFisica += alumno.fisica;
+                sumaProgramacion += alumno.programacion;
+
+                if (alumno.matematicas >= 10) {
+
+                    aprobadosMatematicas++;
+
+                }
+
+                if (alumno.fisica >= 10) {
+
+                    aprobadosFisica++;
+
+                }
+
+                if (alumno.programacion >= 10) {
+
+                    aprobadosProgramacion++;
+                    
+                }
+                
+                if (alumno.matematicas >= 10 && alumno.fisica >= 10 && alumno.programacion >= 10) {
+                    
+                    aprobadosTodas++;
+
+                }
+
+                if ((alumno.matematicas >= 10 && alumno.fisica < 10 && alumno.programacion < 10) || (alumno.fisica >= 10 && alumno.matematicas < 10 && alumno.programacion < 10) || (alumno.programacion >= 10 && alumno.matematicas < 10 && alumno.fisica < 10)) {
+                    
+                    aprobadosUnaMateria++;
+
+                }
+
+                if ((alumno.matematicas >= 10 && alumno.fisica >= 10 && alumno.programacion < 10) || (alumno.fisica >= 10 && alumno.matematicas >= 10 && alumno.programacion < 10) || (alumno.programacion >= 10 && alumno.matematicas >= 10 && alumno.fisica < 10)) {
+                    
+                    aprobadosDosMaterias++;
+                    
+                }
+
+                if (alumno.matematicas > maximaMatematicas) {
+
+                    maximaMatematicas = alumno.matematicas;
+
+                }
+
+                if (alumno.fisica > maximaFisica) {
+
+                    maximaFisica = alumno.fisica;
+
+                }
+                
+                if (alumno.programacion > maximaProgramacion) {
+                    
+                    maximaProgramacion = alumno.programacion;
+
+                }
+
+            }
+
+            var promedioMatematicas = sumaMatematicas / totalAlumnos;
+            var promedioFisica = sumaFisica / totalAlumnos;
+            var promedioProgramacion = sumaProgramacion / totalAlumnos;
+
+            document.getElementById("promedioMatematicas").textContent = promedioMatematicas.toFixed(2);
+            document.getElementById("promedioFisica").textContent = promedioFisica.toFixed(2);
+            document.getElementById("promedioProgramacion").textContent = promedioProgramacion.toFixed(2);
+            document.getElementById("aprobadosMatematicas").textContent = aprobadosMatematicas;
+            document.getElementById("aprobadosFisica").textContent = aprobadosFisica;
+            document.getElementById("aprobadosProgramacion").textContent = aprobadosProgramacion;
+            document.getElementById("aprobadosTodas").textContent = aprobadosTodas;
+            document.getElementById("aprobadosUnaMateria").textContent = aprobadosUnaMateria;
+            document.getElementById("aprobadosDosMaterias").textContent = aprobadosDosMaterias;
+            document.getElementById("maximaMatematicas").textContent = maximaMatematicas;
+            document.getElementById("maximaFisica").textContent = maximaFisica;
+            document.getElementById("maximaProgramacion").textContent = maximaProgramacion;
+
+        }
+
+        // Función para actualizar el registro de alumnos
+
+        function actualizarRegistro() {
+
+            var registroAlumnos = document.getElementById("registroAlumnos");
+            registroAlumnos.innerHTML = "";
+
+            for (var i = 0; i < alumnos.length; i++) {
+                
+                var alumno = alumnos[i];
+                var listItem = document.createElement("li");
+
+                listItem.innerHTML =
+
+                    "Nombre: " + alumno.nombre + "<br>" +
+                    "Cédula: " + alumno.cedula + "<br>" +
+                    "Matemáticas: " + alumno.matematicas + "<br>" +
+                    "Física: " + alumno.fisica + "<br>" +
+                    "Programación: " + alumno.programacion + "<br><br><br>";
+                
+                    registroAlumnos.appendChild(listItem);
+
+            }
+
+        }
+
+        // Función para limpiar todos los registros
+
+        function limpiarRegistros() {
+
+            alumnos = [];
+            actualizarEstadisticas();
+            actualizarRegistro();
+
+            document.getElementById("nombre").value = "";
+            document.getElementById("cedula").value = "";
+            document.getElementById("matematicas").value = "";
+            document.getElementById("fisica").value = "";
+            document.getElementById("programacion").value = "";
+
+            // Limpiar los resultados
+
+            document.getElementById("promedioMatematicas").textContent = "0";
+            document.getElementById("promedioFisica").textContent = "0";
+            document.getElementById("promedioProgramacion").textContent = "0";
+            document.getElementById("aprobadosMatematicas").textContent = "0";
+            document.getElementById("aprobadosFisica").textContent = "0";
+            document.getElementById("aprobadosProgramacion").textContent = "0";
+            document.getElementById("aprobadosTodas").textContent = "0";
+            document.getElementById("aprobadosUnaMateria").textContent = "0";
+            document.getElementById("aprobadosDosMaterias").textContent = "0";
+            document.getElementById("maximaMatematicas").textContent = "0";
+            document.getElementById("maximaFisica").textContent = "0";
+            document.getElementById("maximaProgramacion").textContent = "0";
+
+        }
+
+    </script>
+    
+</body>
+
+</html>
